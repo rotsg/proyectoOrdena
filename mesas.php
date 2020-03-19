@@ -92,9 +92,16 @@ $id_propietario = 1;
 		    	   $mesa=$_POST['mesa'];
 			   $QR = $mesa.".png";
 			   
-			   if($_POST['QR'])
-				QRcode::png($mesa, "QR/".$QR, QR_ECLEVEL_L,10,2);
-			   else if($_POST['agregar']){
+			   if($_POST['QR']){
+				
+				$ultimoc=mysqli_query($linck,"SELECT MAX(id) as ultimo FROM `mesas`;");
+				while ($rowu = mysqli_fetch_array($ultimoc))
+					$ultimo_id = $rowu['ultimo'];
+				$nuevo_id = $ultimo_id + 1;
+				$nuevo_qr = $mesa."-".$nuevo_id;
+				QRcode::png($nuevo_qr, "QR/".$QR, QR_ECLEVEL_L,10,2);
+					 
+			   }else if($_POST['agregar']){
 			   	$reg=mysqli_query($linck,"INSERT INTO `mesas` (`mesa`, `QR`, `id_propietario`) VALUES ('$mesa', '$QR', '$id_propietario');");	
 			   	$mesa = "";
 			   }
