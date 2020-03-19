@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 22-11-2019 a las 10:49:52
--- Versión del servidor: 5.6.45-cll-lve
--- Versión de PHP: 7.2.7
+-- Host: localhost:3306
+-- Generation Time: Mar 19, 2020 at 11:27 AM
+-- Server version: 5.6.47-cll-lve
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ordena`
+-- Database: `ordena`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `actividad_cuentas`
+-- Table structure for table `actividad_cuentas`
 --
 
 CREATE TABLE `actividad_cuentas` (
@@ -38,55 +38,56 @@ CREATE TABLE `actividad_cuentas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 CREATE TABLE `categorias` (
   `id` int(255) NOT NULL,
   `categoria` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `id_propietario` int(255) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT '1',
+  `imagen` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `categorias`
+-- Dumping data for table `categorias`
 --
 
-INSERT INTO `categorias` (`id`, `categoria`, `id_propietario`, `status`) VALUES
-(2, 'Bebidas', 1, 1),
-(3, 'Postes', 1, 1),
-(4, 'Platos fuertes', 1, 1);
+INSERT INTO `categorias` (`id`, `categoria`, `id_propietario`, `status`, `imagen`) VALUES
+(2, 'Bebidas', 1, 1, 'bebidas.jpg'),
+(3, 'Sopas y cremas', 1, 1, 'sopas.jpg'),
+(5, 'Prueba', 1, 0, ''),
+(6, 'Postres', 1, 1, 'postres.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clientes`
+-- Table structure for table `clientes`
 --
 
 CREATE TABLE `clientes` (
   `id` int(255) NOT NULL,
   `cliente` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+  `id_mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contenido_ordenes`
+-- Table structure for table `contenido_ordenes`
 --
 
 CREATE TABLE `contenido_ordenes` (
   `id` int(255) NOT NULL,
   `id_orden` int(255) NOT NULL,
   `id_producto` int(255) NOT NULL,
-  `especificaciones` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+  `cantidad` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mesas`
+-- Table structure for table `mesas`
 --
 
 CREATE TABLE `mesas` (
@@ -97,10 +98,18 @@ CREATE TABLE `mesas` (
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `mesas`
+--
+
+INSERT INTO `mesas` (`id`, `mesa`, `QR`, `id_propietario`, `status`) VALUES
+(8, 'Mesa 6', 'Mesa 6.png', 1, 1),
+(9, 'Mesa 7', 'Mesa 7.png', 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `meseros`
+-- Table structure for table `meseros`
 --
 
 CREATE TABLE `meseros` (
@@ -115,7 +124,7 @@ CREATE TABLE `meseros` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ordenes`
+-- Table structure for table `ordenes`
 --
 
 CREATE TABLE `ordenes` (
@@ -132,7 +141,7 @@ CREATE TABLE `ordenes` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `paquetes`
+-- Table structure for table `paquetes`
 --
 
 CREATE TABLE `paquetes` (
@@ -143,7 +152,7 @@ CREATE TABLE `paquetes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `paquetes`
+-- Dumping data for table `paquetes`
 --
 
 INSERT INTO `paquetes` (`id`, `paquete`, `descripcion`, `precio`) VALUES
@@ -152,7 +161,7 @@ INSERT INTO `paquetes` (`id`, `paquete`, `descripcion`, `precio`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `productos`
+-- Table structure for table `productos`
 --
 
 CREATE TABLE `productos` (
@@ -162,21 +171,21 @@ CREATE TABLE `productos` (
   `precio` float(10,2) NOT NULL,
   `id_categoria` int(255) NOT NULL,
   `id_propietario` int(255) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT '1',
+  `imagen` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `productos`
+-- Dumping data for table `productos`
 --
 
-INSERT INTO `productos` (`id`, `producto`, `descripcion`, `precio`, `id_categoria`, `id_propietario`, `status`) VALUES
-(3, 'Te de durazno cambio', 'prueba cambio', 20.00, 2, 1, 1),
-(4, 'Te de canela cambio', 'prueba2 cambio', 18.00, 2, 1, 1);
+INSERT INTO `productos` (`id`, `producto`, `descripcion`, `precio`, `id_categoria`, `id_propietario`, `status`, `imagen`) VALUES
+(1, 'Margarita', 'Bebida prueba para aplicación', 50.00, 2, 1, 1, 'margarita.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `propietarios`
+-- Table structure for table `propietarios`
 --
 
 CREATE TABLE `propietarios` (
@@ -189,37 +198,37 @@ CREATE TABLE `propietarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `propietarios`
+-- Dumping data for table `propietarios`
 --
 
 INSERT INTO `propietarios` (`id`, `propietario`, `restaurante`, `email`, `password`, `id_paquete`) VALUES
-(1, 'Roxana', 'Prueba', 'roxana', 'roxana', 1);
+(1, 'Roxana', 'Super Alitas', 'roxana', 'roxana', 1);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `actividad_cuentas`
+-- Indexes for table `actividad_cuentas`
 --
 ALTER TABLE `actividad_cuentas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `categorias`
+-- Indexes for table `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indices de la tabla `clientes`
+-- Indexes for table `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `contenido_ordenes`
+-- Indexes for table `contenido_ordenes`
 --
 ALTER TABLE `contenido_ordenes`
   ADD PRIMARY KEY (`id`),
@@ -227,21 +236,21 @@ ALTER TABLE `contenido_ordenes`
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `mesas`
+-- Indexes for table `mesas`
 --
 ALTER TABLE `mesas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indices de la tabla `meseros`
+-- Indexes for table `meseros`
 --
 ALTER TABLE `meseros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indices de la tabla `ordenes`
+-- Indexes for table `ordenes`
 --
 ALTER TABLE `ordenes`
   ADD PRIMARY KEY (`id`),
@@ -251,13 +260,13 @@ ALTER TABLE `ordenes`
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indices de la tabla `paquetes`
+-- Indexes for table `paquetes`
 --
 ALTER TABLE `paquetes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `productos`
+-- Indexes for table `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
@@ -265,107 +274,107 @@ ALTER TABLE `productos`
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indices de la tabla `propietarios`
+-- Indexes for table `propietarios`
 --
 ALTER TABLE `propietarios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `paquete` (`id_paquete`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `actividad_cuentas`
+-- AUTO_INCREMENT for table `actividad_cuentas`
 --
 ALTER TABLE `actividad_cuentas`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT for table `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `clientes`
+-- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT de la tabla `contenido_ordenes`
+-- AUTO_INCREMENT for table `contenido_ordenes`
 --
 ALTER TABLE `contenido_ordenes`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `mesas`
+-- AUTO_INCREMENT for table `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT de la tabla `meseros`
+-- AUTO_INCREMENT for table `meseros`
 --
 ALTER TABLE `meseros`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `ordenes`
+-- AUTO_INCREMENT for table `ordenes`
 --
 ALTER TABLE `ordenes`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `paquetes`
+-- AUTO_INCREMENT for table `paquetes`
 --
 ALTER TABLE `paquetes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
+-- AUTO_INCREMENT for table `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `propietarios`
+-- AUTO_INCREMENT for table `propietarios`
 --
 ALTER TABLE `propietarios`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `categorias`
+-- Constraints for table `categorias`
 --
 ALTER TABLE `categorias`
   ADD CONSTRAINT `categorias_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`);
 
 --
--- Filtros para la tabla `contenido_ordenes`
+-- Constraints for table `contenido_ordenes`
 --
 ALTER TABLE `contenido_ordenes`
   ADD CONSTRAINT `contenido_ordenes_ibfk_1` FOREIGN KEY (`id_orden`) REFERENCES `ordenes` (`id`),
   ADD CONSTRAINT `contenido_ordenes_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`);
 
 --
--- Filtros para la tabla `mesas`
+-- Constraints for table `mesas`
 --
 ALTER TABLE `mesas`
   ADD CONSTRAINT `mesas_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`);
 
 --
--- Filtros para la tabla `meseros`
+-- Constraints for table `meseros`
 --
 ALTER TABLE `meseros`
   ADD CONSTRAINT `meseros_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`);
 
 --
--- Filtros para la tabla `ordenes`
+-- Constraints for table `ordenes`
 --
 ALTER TABLE `ordenes`
   ADD CONSTRAINT `ordenes_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`),
@@ -374,14 +383,14 @@ ALTER TABLE `ordenes`
   ADD CONSTRAINT `ordenes_ibfk_4` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`);
 
 --
--- Filtros para la tabla `productos`
+-- Constraints for table `productos`
 --
 ALTER TABLE `productos`
   ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`),
   ADD CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`);
 
 --
--- Filtros para la tabla `propietarios`
+-- Constraints for table `propietarios`
 --
 ALTER TABLE `propietarios`
   ADD CONSTRAINT `propietarios_ibfk_1` FOREIGN KEY (`id_paquete`) REFERENCES `paquetes` (`id`);
